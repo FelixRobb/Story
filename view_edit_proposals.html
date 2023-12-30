@@ -1,0 +1,27 @@
+<!-- Add this to your templates folder -->
+<!-- view_edit_proposals.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your head content here as needed -->
+</head>
+
+
+
+
+
+
+
+<body>
+    <main>
+        <h2>Edit Proposals for {{ story.title }}</h2>
+        <ul>
+            {% for proposal in proposals %}
+                <li>
+                    <p><strong>Author:</strong> {{ proposal.user.username }}</p>
+                    <p><strong>Content:</strong> {{ proposal.content }}</p>
+                    <p><strong>Status:</strong> {{ proposal.status }}</p>
+                    <form action="{{ url_for('handle_edit_proposal', story_id=story.id, proposal_id=proposal.id) }}" method="post">
+                        <button type="submit" name="action" value="accept">Accept</button>
+                        <button type="submit" name="action" value="decline">Decline</button>
+                    </form>

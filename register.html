@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            background: url('images/login_bg.jpg') no-repeat;
+            background-size: cover;
+            background-position: center;
+            animation: animateBg 10s linear infinite;
+        }
+
+        @keyframes animateBg {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .register-form {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            width: 300px;
+            background: transparent;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-top: 100px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-bottom: 1px solid #fff;
+            background: transparent;
+            color: #fff;
+            outline: none;
+        }
+
+        button {
+            width: 90%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-link {
+            color: #00ff00;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="register-form">
+            <h2>Register</h2>
+            <form action="{{ url_for('register') }}" method="post">
+                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="{{ url_for('login') }}" class="login-link">Login here</a></p>
+        </div>
+    </div>
+</body>
+</html>

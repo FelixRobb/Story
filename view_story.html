@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ story.title }}</title>
+  <style>
+  
+       body {
+    background-color: #282c35;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+h2 {
+    color: #61dafb;
+}
+
+p {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.story-box {
+    border: 2px solid #00ff00;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #333;
+    border-radius: 8px;
+}
+
+.content {
+    margin-bottom: 20px;
+}
+
+.button-container {
+    margin-bottom: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.comment-item {
+    border: 1px solid #555;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color: #444;
+}
+
+.comment-item:hover {
+    background-color: #333;
+}
+  
+  </style>
+</head>
+<body>
+    <main>
+        <div class="story-box">
+            <h2>{{ story.title }}</h2>
+            <p><strong>Author:</strong> {{ story.author.username }}</p>
+            <p><strong>Synopsis:</strong> {{ story.synopsis }}</p>
+            <p class="content"><strong>Content:</strong></p>
+            <div class="content-excerpt">{{ story.content }}</div>
+            <p><strong>Tags:</strong> {{ story.tags }}</p>
+            <p><strong>Comments:</strong></p>
+            <ul class="comments-list">
+                {% for comment in story.comments %}
+                    <li class="comment-item">{{ comment.content }}</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Display Versions -->
+            <p><strong>Versions:</strong></p>
+            <ul>
+                {% for version in versions %}
+                    <li>{{ version.date }} - {{ version.content }}</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Button Container -->
+            <div class="button-container">
+                <button class="button" id="toggleCommentForm">Add a Comment</button>
+
+                <!-- Form for adding comments (initially hidden) -->
+                <form id="commentForm" action="{{ url_for('add_comment', story_id=story.id) }}" method="post" style="display: none;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <label for="comment">Add a Comment:</label>
+                    <input type="text" id="comment" name="comment" required>
+                    <button class="button" type="submit">Submit Comment</button>
+                </form>
+
+                <a class="button" href="{{ url_for('edit_story', story_id=story.id) }}">Edit Story</a>
+            </div>
+        </div>
+
+        <!-- Display Edit Proposals -->
+        {% for proposal in edit_proposals %}
+            <div>
+                <p>{{ proposal.user.username }} proposed an edit:</p>
+                <p>{{ proposal.content }}</p>
+                {% if current_user == story.author and not proposal.author_approval %}
+                    <form action="{{ url_for('handle_edit_proposal', proposal_id=proposal.id, action='accept') }}" method="post">
+                        {{ form.hidden_tag() }}
+                        <input class="button" type="submit" value="Accept">
+                    </form>
+                    <form action="{{ url_for('handle_edit_proposal', proposal_id=proposal.id, action='decline') }}" method="post">
+                        <input class="button" type="submit" value="Decline">
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </main>
+    <script>
+        // JavaScript to toggle the comment form visibility
+        document.getElementById('toggleCommentForm').addEventListener('click', function () {
+            var commentForm = document.getElementById('commentForm');
+            commentForm.style.display = (commentForm.style.display === 'none') ? 'block' : 'none';
+        });
+    </script>
+</body>
+</html>

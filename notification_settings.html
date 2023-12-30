@@ -1,0 +1,22 @@
+<!-- notification_settings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your head content here -->
+</head>
+<body>
+    <h1>Notification Settings</h1>
+    <form method="post">
+        <label for="story_updates">Receive Story Updates:</label>
+        <input type="checkbox" id="story_updates" name="story_updates" {% if user.story_updates %}checked{% endif %}><br>
+
+        <label for="comments">Receive Comments Notifications:</label>
+        <input type="checkbox" id="comments" name="comments" {% if user.comments %}checked{% endif %}><br>
+
+        <label for="followers">Receive Followers Notifications:</label>
+        <input type="checkbox" id="followers" name="followers" {% if user.followers %}checked{% endif %}><br>
+
+        <input type="submit" value="Save Notification Settings">
+    </form>
+</body>
+</html>

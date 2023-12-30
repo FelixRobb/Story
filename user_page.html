@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            color: #ff0000;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        
+
+      .links {
+            display: block;
+            text-align: center;
+            color: #00ff00;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #4CAF50;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            
+        }
+
+        .story-box {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #333;
+        }
+
+        .author {
+            color: #00ff00;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        h3 {
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .synopsis {
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+
+        .content-preview {
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .tags {
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #searchForm {
+            display: none;
+        }
+  
+   .story-box {
+    display: block;
+        }
+  
+          .story-link {
+    display: none;
+          }
+  
+  
+        .story-box a.story-link {
+    color: #ff9900; /* Your desired text color for the link */
+    text-decoration: none; /* Remove underline */
+    border: none; /* Remove border */
+    background-color: transparent; /* Make background transparent */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    /* Add any other styles as needed */
+}
+    </style>
+</head>
+<body>
+    <main>
+        <h2>User Page - {{ user.username }} <button onclick="toggleSearch()">Search</button></h2>
+        <div id="searchForm" class="collapse">
+            {% include 'search.html' %}
+        </div>
+        <ul>
+            {% if is_own_page %}
+           <li><a class="links" href="{{ url_for('edit_profile', user_id=current_user.id) }}">Edit Profile</a></li>
+           <li><a class="links" href="{{ url_for('create_story', story_id=-1) }}">Create Story</a></li>
+           <li><a class="links" href="{{ url_for('notifications') }}" class="notification-button">Notifications</a></li>
+           <li><a class="links" href="{{ url_for('logout') }}">Logout</a></li>
+            {% endif %}
+        </ul>
+    
+        {% if not is_own_page %}
+            <!-- Display follow button or any other user-specific actions -->
+            <form method="post" action="{{ url_for('follow_user', user_id=user.id) }}">
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">   
+              <button type="submit">Follow</button>
+            </form>
+        {% endif %}
+       
+        <p>User Stories:</p>
+        <ul>
+          {% for story in stories %}
+          <a id="story-link" href="{{ url_for('view_story', story_id=story.id) }}">
+        <li class="story-box">
+            <div class="author">{{ story.author.username }}</div>
+            <h3>{{ story.title }}</h3>
+            <p class="synopsis">{{ story.synopsis }}</p>
+            <div class="content-preview">{{ story.content[:10] }}...</div>
+            <p class="tags">Tags: {{ story.tags }}</p>
+            <button class="button" id="toggleCommentForm">Add a Comment</button><br>
+
+            <!-- Form for adding comments (initially hidden) -->
+            <form id="commentForm" action="{{ url_for('add_comment', story_id=story.id) }}" method="post" style="display: none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <label for="comment">Add a Comment:</label>
+                <input type="text" id="comment" name="comment" required>
+                <button class="button" type="submit">Submit Comment</button>
+            </form>
+        </li>
+    </a>
+{% endfor %}
+        </ul>
+             
+        <p>Following:</p>
+        <ul>
+            {% for followed_user in current_user.followed %}
+                <li><a class="links" href="{{ url_for('user_page', user_id=followed_user.id) }}">{{ followed_user.username }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <p>Followers:</p>
+        <ul>
+            {% for follower in followers %}
+                <li>{{ follower.username }}</li>
+            {% endfor %}
+        </ul>
+
+        <p>Suggested Users:</p>
+        <ul>
+            {% for suggested_user in suggested_users %}
+                <li><a class="links" href="{{ url_for('user_page', user_id=suggested_user.id) }}">{{ suggested_user.username }}</a></li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+<script>
+    function toggleSearch() {
+        var searchForm = document.getElementById('searchForm');
+        searchForm.style.display = (searchForm.style.display === '') ? 'block' : '';
+    }
+</script>
+
+</html>

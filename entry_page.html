@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 50px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            margin-top: 10px;
+        }
+        .features {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .feature {
+            width: 30%;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            margin: 10px;
+        }
+        .register-btn, .login-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Story App!</h1>
+    <p>Immerse yourself in a captivating world of storytelling. Share your creativity, explore unique stories, and connect with a community of writers.</p>
+
+    <div class="features">
+        <div class="feature">
+            <h2>Create</h2>
+            <p>Bring your stories to life with our intuitive story creation tool. Write, edit, and craft your narrative with ease.</p>
+        </div>
+        <div class="feature">
+            <h2>Explore</h2>
+            <p>Dive into a vast collection of stories from diverse genres. Discover hidden gems and follow your favorite authors.</p>
+        </div>
+        <div class="feature">
+            <h2>Connect</h2>
+            <p>Engage with the writing community. Receive feedback on your work, collaborate on edits, and build lasting connections.</p>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <a href="{{ url_for('register') }}" class="register-btn">Get Started - Register</a>
+        <span>or</span>
+        <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+    </div>
+</body>
+</html>

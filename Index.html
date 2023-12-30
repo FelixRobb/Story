@@ -1,0 +1,28 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Story App - Home</title>
+</head>
+<body>
+    <header>
+        <h1>Story App</h1>
+    </header>
+
+    <section id="stories">
+        <h2>Stories</h2>
+        <ul>
+            {% for story in stories %}
+                <li><a href="{{ url_for('view_story', story_id=story.id) }}">{{ story.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id="create-story">
+        <a href="{{ url_for('create') }}">Create a New Story</a>
+    </section>
+</body>
+</html>

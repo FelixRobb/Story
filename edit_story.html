@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Story</title>
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .editor {
+            background-color: #2b2b2b;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            width: 95%;
+            height: 200px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="editor">
+        <h2>Edit Story</h2>
+        <form method="post">
+          {{ form.hidden_tag() }}
+            <textarea name="edit" required>{{ story.content }}</textarea>
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</body>
+</html>

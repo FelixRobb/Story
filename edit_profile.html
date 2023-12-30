@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            color: #ff0000;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #00ff00;
+        }
+
+        input, textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 4px;
+            color: #ffffff;
+        }
+        
+     
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h2>Edit Profile</h2>
+        <form method="post" action="{{ url_for('edit_profile', user_id=user.id) }}" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ form.username.data }}" required>
+
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio" rows="4">{{ form.bio.data }}</textarea>
+
+            <label for="profile_pic">Profile Picture:</label>
+            <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </main>
+</body>
+</html>

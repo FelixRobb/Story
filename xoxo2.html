@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XOXO Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .game {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px;
+            border: 2px solid #000;
+            padding: 10px;
+            background-color: #fff;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .cell:hover {
+            background-color: #e0e0e0;
+        }
+        .cell.active {
+            background-color: #f0f0f0;
+        }
+        .game.winner .cell.active {
+            color: #ff0000;
+        }
+        .game.tie .cell.active {
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="game"></div>
+    <script>
+        const cells = Array.from({ length: 9 }, () => null);
+        const cellElements = document.querySelectorAll('.cell');
+        const gameDiv = document.querySelector('.game');
+        let currentPlayer = 'X';
+
+        cellElements.forEach((cell, index) => {
+            cell.addEventListener('click', () => {
+                if (cells[index] !== null) return;
+                cells[index] = currentPlayer;
+                cell.textContent = currentPlayer;
+                cell.classList.add('active');
+                checkForWinner();
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            });
+        });
+
+        function checkForWinner() {
+            const winningCombinations = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6],
+            ];
+
+            for (const combination of winningCombinations) {
+                const [a, b, c] = combination;
+                if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
+                    gameDiv.classList.add('winner');
+                    return;
+                }
+            }
+
+            if (!cells.includes(null)) {
+                gameDiv.classList.add('tie');
+            }
+        }
+    </script>
+</body>
+</html>

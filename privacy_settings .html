@@ -1,0 +1,19 @@
+<!-- privacy_settings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your head content here -->
+</head>
+<body>
+    <h1>Privacy Settings</h1>
+    <form method="post">
+        <label for="privacy_setting">Privacy Setting:</label>
+        <select id="privacy_setting" name="privacy_setting">
+            <option value="public" {% if user.privacy_setting == 'public' %}selected{% endif %}>Public</option>
+            <option value="private" {% if user.privacy_setting == 'private' %}selected{% endif %}>Private</option>
+        </select>
+
+        <input type="submit" value="Save Privacy Settings">
+    </form>
+</body>
+</html>

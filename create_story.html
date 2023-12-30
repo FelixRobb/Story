@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Story</title>
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .creator {
+            background-color: #2b2b2b;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        input,
+        textarea {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            resize: vertical;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="creator">
+        <h2>Create Story</h2>
+        <form method="POST" action="{{ url_for('create_story') }}">
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+           
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="synopsis">Synopsis:</label>
+            <input type="text" id="synopsis" name="synopsis" required>
+
+            <label for="content">Content:</label>
+            <textarea name="content" required></textarea>
+
+            <label for="tags">Tags:</label>
+            <input type="text" id="tags" name="tags">
+
+            <button type="submit">Create Story</button>
+            
+         </form>
+    </div>
+</body>
+</html>

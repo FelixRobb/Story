@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            color: #ff0000;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #00ff00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h2>Search Results</h2>
+
+        <h3>Story Results:</h3>
+        <ul>
+            {% for story in story_results %}
+                <li><a href="{{ url_for('view_story', story_id=story.id) }}">{{ story.title }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <h3>User Results:</h3>
+        <ul>
+            {% for user in user_results %}
+                <li><a href="{{ url_for('user_page', user_id=user.id) }}">{{ user.username }}</a></li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!-- general_settings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your head content here -->
+</head>
+<body>
+    <h1>General Settings</h1>
+    <form method="post">
+        <label for="language">Language:</label>
+        <input type="text" id="language" name="language" value="{{ user.language }}" required>
+        
+        <label for="theme">Theme:</label>
+        <select id="theme" name="theme">
+            <option value="light" {% if user.theme == 'light' %}selected{% endif %}>Light</option>
+            <option value="dark" {% if user.theme == 'dark' %}selected{% endif %}>Dark</option>
+        </select>
+        
+        <input type="submit" value="Save General Settings">
+    </form>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!-- templates/create.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Story App - Create a New Story</title>
+</head>
+<body>
+    <header>
+        <h1>Create a New Story</h1>
+    </header>
+
+    <section id="create-form">
+        <form method="post" action="{{ url_for('create') }}">
+            <label for="title">Title:</label>
+            <input type="text" name="title" required><br>
+
+            <label for="content">Content:</label>
+            <textarea name="content" rows="4" required></textarea><br>
+
+            <input type="submit" value="Create Story">
+        </form>
+    </section>
+
+    <section id="back-to-stories">
+        <a href="{{ url_for('index') }}">Back to Stories</a>
+    </section>
+</body>
+</html>
